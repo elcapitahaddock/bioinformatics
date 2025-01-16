@@ -1,5 +1,6 @@
 # Función para convertir una secuencia de ADN en codones
 def dna_to_codons(dna_sequence):
+    dna_sequence = dna_sequence.upper()  # Convertir a mayúsculas
     if len(dna_sequence) % 3 != 0:
         print("Advertencia: la secuencia no tiene una longitud múltiplo de 3.")
     codons = [dna_sequence[i:i+3] for i in range(0, len(dna_sequence), 3)]
@@ -32,6 +33,22 @@ def codons_to_aminoacids(codons):
         else:
             amino_acids.append('X')  # Si el codón no está en el diccionario, marcamos como 'X' (desconocido)
     return amino_acids
+
+# Función para contar la frecuencia de nucleótidos en una secuencia de ADN
+def nucleotide_frequency(dna_sequence):
+    dna_sequence = dna_sequence.upper()  # Convertir a mayúsculas
+    frequency = {"A": 0, "T": 0, "C": 0, "G": 0, "Desconocidos": 0}
+    for nucleotide in dna_sequence:
+        if nucleotide in frequency:
+            frequency[nucleotide] += 1
+        else:
+            frequency["Desconocidos"] += 1  # Contar nucleótidos desconocidos
+    return frequency
+
+# Función para convertir una secuencia de ADN a ARN
+def dna_to_rna(dna_sequence):
+    dna_sequence = dna_sequence.upper()  # Convertir a mayúsculas
+    return dna_sequence.replace("T", "U")
 
 # Función para comparar dos secuencias de ADN
 def compare_sequences(dna_sequence1, dna_sequence2):
@@ -80,4 +97,17 @@ print("Aminoácidos correspondientes a la primera secuencia de ADN:")
 print(' '.join(amino_acids1))
 # Imprimir los aminoácidos correspondientes a la segunda secuencia de ADN
 print("Aminoácidos correspondientes a la segunda secuencia de ADN:")
-print(' '.join(amino_acids2)) 
+print(' '.join(amino_acids2))
+
+# Contar la frecuencia de nucleótidos en la primera secuencia de ADN
+frequency1 = nucleotide_frequency(dna_sequence1)
+print("Frecuencia de nucleótidos en la primera secuencia de ADN:", frequency1)
+# Contar la frecuencia de nucleótidos en la segunda secuencia de ADN
+frequency2 = nucleotide_frequency(dna_sequence2)
+print("Frecuencia de nucleótidos en la segunda secuencia de ADN:", frequency2)
+
+# Convertir las secuencias de ADN a ARN
+rna_sequence1 = dna_to_rna(dna_sequence1)
+rna_sequence2 = dna_to_rna(dna_sequence2)
+print("Primera secuencia de ADN convertida a ARN:", rna_sequence1)
+print("Segunda secuencia de ADN convertida a ARN:", rna_sequence2)
