@@ -1,8 +1,13 @@
-# para visualizar gráficos en este notebook
+# Este código está diseñado para ejecutarse en Google Colab.
+# Para visualizar gráficos en este notebook
 %matplotlib inline
 
-# importamos los módulos necesarios
+# Instalar la biblioteca adjustText si no está instalada
+!pip install adjustText
+
+# Importamos los módulos necesarios
 import matplotlib.pyplot as plt
+from adjustText import adjust_text
 
 def generar_pie_chart(datos_biomasa, titulo):
     """
@@ -16,19 +21,28 @@ def generar_pie_chart(datos_biomasa, titulo):
     fig, ax = plt.subplots()
     wedges, texts, autotexts = ax.pie(
         sizes,
-        labels=labels,  # Mostramos las etiquetas en el gráfico
+        labels=None,  # Quitamos las etiquetas del gráfico para evitar la superposición
         autopct='%1.1f%%',  # Añadimos y visibilizamos los porcentajes sobre los sectores
         startangle=90,  # Comenzar desde arriba
         colors=plt.cm.tab10.colors  # Colores distintos para los sectores
     )
-    ax.axis('equal')  # Nos aseguramos que sea un círculo
+    ax.axis('equal')  # Nos aseguramos de que sea un círculo
 
+    # Generar la leyenda con nombres y valores
+    legend_labels = [f'{label} - {size:.3f} Gt C' for label, size in zip(labels, sizes)]
+    
     # Añadimos una leyenda
     ax.legend(
         wedges,  # Asociamos los sectores a la leyenda
-        labels,  # Etiquetas de los grupos
-        loc="best"  # Ubicación automática para la mejor posición
+        legend_labels,  # Etiquetas de los grupos con valores en Gt C
+        loc="center left",  # Ubicación a la derecha del gráfico
+        bbox_to_anchor=(1, 0.5)  # Ajustamos la posición de la leyenda
     )
+
+    # Ajustar la posición de los textos para evitar superposiciones
+    for text in autotexts:
+        text.set_fontsize(10)
+    adjust_text(autotexts, arrowprops=dict(arrowstyle="->"))
 
     # Título del gráfico
     plt.title(titulo)
