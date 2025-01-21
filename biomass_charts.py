@@ -1,10 +1,10 @@
 # Este código está diseñado para ejecutarse en Google Colab.
 # Para visualizar gráficos en este notebook
-%matplotlib inline
+"""%matplotlib inline   #añade esta línea de código en colab para visualizar gráficos
 
 # Instalar la biblioteca adjustText si no está instalada
 !pip install adjustText
-
+"""
 # Importamos los módulos necesarios
 import matplotlib.pyplot as plt
 from adjustText import adjust_text
